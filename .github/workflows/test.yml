@@ -1,4 +1,4 @@
-name: Deploy Docker Compose
+name: Deploy and Test Docker Compose
 
 on:
   push:
@@ -35,3 +35,16 @@ jobs:
         docker-compose up -d  # Deploy the application in detached mode
       env:
         DOCKER_BUILDKIT: 1
+
+    - name: Wait for services to be ready
+      run: sleep 30  # Wait for 30 seconds to ensure the services are up and running
+
+    - name: Run application tests
+      run: |
+        # Replace with your specific test commands
+        curl --fail http://localhost:8080/health || exit 1
+        # Example: Run additional tests if needed
+
+    - name: Clean up unused Docker resources
+      run: |
+        docker system prune -f
