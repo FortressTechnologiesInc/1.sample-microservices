@@ -29,8 +29,8 @@ jobs:
         password: ${{ secrets.DOCKERHUB_TOKEN }}
 
     - name: Deploy with Docker Compose
+       working-directory: src/
       run: |
-        cd 1.sample-microservices/src/
         docker-compose pull  # Ensure images are up-to-date
         docker-compose up -d  # Deploy the application in detached mode
       env:
